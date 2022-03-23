@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NShop.Data.Configurations;
 using NShop.Data.Entities;
+using NShop.Data.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace NShop.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //configuration using fluent API
             modelBuilder.ApplyConfiguration(new CartConfiguration());
 
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
@@ -32,6 +34,10 @@ namespace NShop.Data.EF
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+
+            //Data seeding
+
+            modelBuilder.Seed();
 
             //base.OnModelCreating(modelBuilder);
         }
