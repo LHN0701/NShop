@@ -30,6 +30,9 @@ namespace NShop.Data.Configurations
 
 
             builder.Property(x => x.ShipPhoneNumber).IsRequired().HasMaxLength(200);
+        
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
+
         }
     }
 }
