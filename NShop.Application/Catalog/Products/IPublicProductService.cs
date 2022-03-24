@@ -1,4 +1,5 @@
 ﻿using NShop.Application.Catalog.Products.Dtos;
+using NShop.Application.Catalog.Products.Dtos.Public;
 using NShop.Application.Dtos;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace NShop.Application.Catalog.Products
 {
     public interface IPublicProductService
     {
-        public PagedViewModel<ProductViewModel> GetAllByCategoryId(int categoryId, int pageIndex, int pageSize);
+        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetProductPagingRequest request);
     }
 }
