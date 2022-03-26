@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NShop.ViewModels.Catalog.Products.Manage
+namespace NShop.ViewModels.Catalog.Products
 {
     public class ProductCreateRequest
     {

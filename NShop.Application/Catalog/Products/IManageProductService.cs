@@ -15,7 +15,7 @@ namespace NShop.Application.Catalog.Products
         Task<bool> UpdatePrice(int productId, decimal newPrice);
         Task<bool> UpdateStock(int productId, int addedQuantity);
         Task AddViewcount(int productId);
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
         Task<int> AddImages(int productId, List<IFormFile> files);
         Task<int> RemoveImage(int imageId);
         Task<int> UpdateImage(int imageId, string caption, bool isDefault);
