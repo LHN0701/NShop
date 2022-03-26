@@ -1,10 +1,8 @@
-﻿using NShop.Application.Catalog.Products.Dtos;
-using NShop.Application.Catalog.Products.Dtos.Manage;
-using NShop.Application.Dtos;
-using System;
+﻿using Microsoft.AspNetCore.Http;
+using NShop.ViewModels.Catalog.Products;
+using NShop.ViewModels.Catalog.Products.Manage;
+using NShop.ViewModels.Common;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NShop.Application.Catalog.Products
@@ -18,5 +16,10 @@ namespace NShop.Application.Catalog.Products
         Task<bool> UpdateStock(int productId, int addedQuantity);
         Task AddViewcount(int productId);
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<int> AddImages(int productId, List<IFormFile> files);
+        Task<int> RemoveImage(int imageId);
+        Task<int> UpdateImage(int imageId, string caption, bool isDefault);
+        Task<List<ProductImageViewModel>> GetListImage(int productId);
+
     }
 }

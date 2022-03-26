@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.15" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NShop.Data\NShop.Data.csproj" />
     <ProjectReference Include="..\NShop.Utilities\NShop.Utilities.csproj" />
+    <ProjectReference Include="..\NShop.ViewModels\NShop.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

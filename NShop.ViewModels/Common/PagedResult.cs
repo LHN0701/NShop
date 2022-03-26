@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NShop.Application.Dtos
+namespace NShop.ViewModels.Common
 {
     public class PagedResult<T>
     {

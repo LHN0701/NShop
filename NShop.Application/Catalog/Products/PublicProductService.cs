@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NShop.Application.Catalog.Products.Dtos;
-using NShop.Application.Catalog.Products.Dtos.Public;
-using NShop.Application.Dtos;
 using NShop.Data.EF;
-using System;
+using NShop.ViewModels.Catalog.Products;
+using NShop.ViewModels.Catalog.Products.Public;
+using NShop.ViewModels.Common;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NShop.Application.Catalog.Products
