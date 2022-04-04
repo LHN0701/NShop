@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NShop.Application.Catalog.Products;
 using NShop.Application.Common;
+using NShop.Application.System.Users;
 using NShop.Data.EF;
+using NShop.Data.Entities;
 using NShop.Utilities.Constants;
 using System;
 using System.Collections.Generic;
@@ -31,12 +34,20 @@ namespace NShop.BackendApi
         {
             services.AddDbContext<NShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<NShopDbContext>()
+                .AddDefaultTokenProviders();
 
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
 
             services.AddTransient<IPublicProductService, PublicProductService>();
             services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient<IUserService, UserService>();
+
             services.AddControllersWithViews();
 
             services.AddSwaggerGen(c =>
@@ -71,7 +82,6 @@ namespace NShop.BackendApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger NShop V1");
             });
-
 
             app.UseEndpoints(endpoints =>
             {
