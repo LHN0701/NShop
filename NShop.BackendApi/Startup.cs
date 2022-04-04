@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +17,7 @@ using NShop.Application.System.Users;
 using NShop.Data.EF;
 using NShop.Data.Entities;
 using NShop.Utilities.Constants;
+using NShop.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +53,11 @@ namespace NShop.BackendApi
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserService, UserService>();
 
-            services.AddControllers();
+            //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
+            //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
+
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
             services.AddSwaggerGen(c =>
             {
