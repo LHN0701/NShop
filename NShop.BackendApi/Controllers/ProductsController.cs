@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NShop.Application.Catalog.Products;
 using NShop.ViewModels.Catalog.ProductImages;
 using NShop.ViewModels.Catalog.Products;
@@ -8,6 +9,7 @@ namespace NShop.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IPublicProductService _publicProductService;
