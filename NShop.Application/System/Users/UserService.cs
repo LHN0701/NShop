@@ -40,13 +40,15 @@ namespace NShop.Application.System.Users
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.LastName),
-                new Claim(ClaimTypes.Role, string.Join(";", roles))
+                new Claim(ClaimTypes.Role, string.Join(";", roles)),
+                new Claim(ClaimTypes.Name, request.UserName)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+            var token = new JwtSecurityToken(
+                _config["Tokens:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
                 expires: DateTime.Now.AddHours(3),
