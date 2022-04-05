@@ -12,5 +12,7 @@ namespace NShop.AdminApp.Services
         Task<string> Authenticate(LoginRequest request);
 
         Task<PagedResult<Uservm>> GetUsersPagings(GetUserPagingRequest request);
+
+        Task<bool> RegisterUser(RegisterRequest registerRequest);
     }
 }
