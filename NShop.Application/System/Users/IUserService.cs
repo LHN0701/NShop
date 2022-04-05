@@ -1,4 +1,5 @@
-﻿using NShop.ViewModels.System.Users;
+﻿using NShop.ViewModels.Common;
+using NShop.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace NShop.Application.System.Users
         Task<string> Authencate(LoginRequest request);
 
         Task<bool> Register(RegisterRequest request);
+
+        Task<PagedResult<Uservm>> GetUsersPaging(GetUserPagingRequest request);
     }
 }
