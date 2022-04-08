@@ -78,7 +78,8 @@ namespace NShop.Application.System.Users
                 FirstName = user.FirstName,
                 Dob = user.Dob,
                 Id = user.Id,
-                LastName = user.LastName
+                LastName = user.LastName,
+                UserName = user.UserName
             };
             return new ApiSuccessResult<Uservm>(userVm);
         }
@@ -110,7 +111,9 @@ namespace NShop.Application.System.Users
 
             var pagedResult = new PagedResult<Uservm>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data,
             };
 
