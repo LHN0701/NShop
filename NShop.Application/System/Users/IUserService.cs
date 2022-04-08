@@ -20,5 +20,7 @@ namespace NShop.Application.System.Users
         Task<ApiResult<PagedResult<Uservm>>> GetUsersPaging(GetUserPagingRequest request);
 
         Task<ApiResult<Uservm>> GetById(Guid id);
+
+        Task<ApiResult<bool>> Delete(Guid id);
     }
 }
