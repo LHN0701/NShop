@@ -5,6 +5,14 @@
     ViewData["Title"] = "Danh sách người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section scripts
+{
+    <script>
+        setTimeout(function () {
+            document.getElementById("msgAlert").style.display = "none";
+        }, 2000);
+    </script>
+}
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Danh sách người dùng</h1>
@@ -35,6 +43,14 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+            </div>
             <table class="table" id="">
                 <thead>
                     <tr>
