@@ -157,7 +157,9 @@ namespace NShop.Application.Catalog.Products
 
             var pagedResult = new PagedResult<ProductViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
                 Items = data,
             };
 
@@ -342,8 +344,10 @@ namespace NShop.Application.Catalog.Products
 
             var pagedResult = new PagedResult<ProductViewModel>()
             {
-                TotalRecord = totalRow,
-                Items = data,
+                TotalRecords = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+                Items = data
             };
 
             return pagedResult;
