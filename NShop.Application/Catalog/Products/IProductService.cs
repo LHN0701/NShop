@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using NShop.ViewModels.Catalog.ProductImages;
+﻿using NShop.ViewModels.Catalog.ProductImages;
 using NShop.ViewModels.Catalog.Products;
-using NShop.ViewModels.Catalog.Products.Manage;
 using NShop.ViewModels.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,7 +14,7 @@ namespace NShop.Application.Catalog.Products
 
         Task<int> Detele(int productId);
 
-        Task<ProductViewModel> GetById(int productId, string languageId);
+        Task<ProductVm> GetById(int productId, string languageId);
 
         Task<bool> UpdatePrice(int productId, decimal newPrice);
 
@@ -24,7 +22,7 @@ namespace NShop.Application.Catalog.Products
 
         Task AddViewcount(int productId);
 
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
+        Task<PagedResult<ProductVm>> GetAllPaging(GetManageProductPagingRequest request);
 
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
 
@@ -36,6 +34,6 @@ namespace NShop.Application.Catalog.Products
 
         Task<List<ProductImageViewModel>> GetListImages(int productId);
 
-        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
+        Task<PagedResult<ProductVm>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
     }
 }
