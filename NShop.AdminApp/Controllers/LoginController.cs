@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NShop.AdminApp.Services;
+using NShop.Utilities.Constants;
 using NShop.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,9 @@ namespace NShop.AdminApp.Controllers
                 IsPersistent = false
             };
 
-            HttpContext.Session.SetString("Token", result.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
+
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
 
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NShop.Utilities\NShop.Utilities.csproj" />
     <ProjectReference Include="..\NShop.ViewModels\NShop.ViewModels.csproj" />
   </ItemGroup>
 
