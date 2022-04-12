@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using NShop.Utilities.Constants;
 using NShop.ViewModels.Catalog.Products;
 using NShop.ViewModels.Common;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NShop.AdminApp.Services
@@ -70,6 +72,34 @@ namespace NShop.AdminApp.Services
             var data = await GetAsync<PagedResult<ProductVm>>(
                 $"/api/products/paging?pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}&keyWord={request.Keyword}&languageId={request.LanguageId}&categoryId={request.CategoryId}");
+
+            return data;
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/products/{id}/categories", httpContent);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+        }
+
+        public async Task<ProductVm> GetById(int Id, string languageId)
+        {
+            var data = await GetAsync<ProductVm>(
+                    $"/api/products/{Id}/{languageId}");
 
             return data;
         }
