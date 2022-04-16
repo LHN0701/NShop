@@ -119,5 +119,14 @@ namespace NShop.AdminApp.Controllers
             }
             return categoryAssignRequest;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var languageid = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var result = await _productApiClient.GetById(id, languageid);
+            return View(result);
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace NShop.AdminApp.Services
 
         Task<ApiResult<Uservm>> GetById(Guid id);
 
+        Task<ApiResult<Uservm>> GetByName(string name);
+
         Task<ApiResult<bool>> Delete(Guid id);
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);

@@ -93,6 +93,13 @@ namespace NShop.BackendApi.Controllers
             return Ok(user);
         }
 
+        [HttpGet("{name}/page")]
+        public async Task<IActionResult> GetByName(string name)
+        {
+            var user = await _userService.GetByName(name);
+            return Ok(user);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

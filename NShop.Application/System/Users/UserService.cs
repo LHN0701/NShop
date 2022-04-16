@@ -99,6 +99,28 @@ namespace NShop.Application.System.Users
             return new ApiSuccessResult<Uservm>(userVm);
         }
 
+        public async Task<ApiResult<Uservm>> GetByName(string name)
+        {
+            var user = await _userManager.FindByNameAsync(name);
+            if (user == null)
+            {
+                return new ApiErrorResult<Uservm>("User không tồn tại");
+            }
+            var roles = await _userManager.GetRolesAsync(user);
+            var userVm = new Uservm()
+            {
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                FirstName = user.FirstName,
+                Dob = user.Dob,
+                Id = user.Id,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Roles = roles
+            };
+            return new ApiSuccessResult<Uservm>(userVm);
+        }
+
         public async Task<ApiResult<PagedResult<Uservm>>> GetUsersPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;

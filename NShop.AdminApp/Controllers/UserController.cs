@@ -51,6 +51,13 @@ namespace NShop.AdminApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> DetailAdmin(string name)
+        {
+            var result = await _userApiClient.GetByName(name);
+            return View(result.ResultObj);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();

@@ -61,6 +61,8 @@ namespace NShop.AdminApp.Controllers
 
             HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
 
+            Console.WriteLine();
+
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,

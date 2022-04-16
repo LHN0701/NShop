@@ -73,6 +73,21 @@ namespace NShop.AdminApp.Services
             return JsonConvert.DeserializeObject<ApiErrorResult<Uservm>>(body);
         }
 
+        public async Task<ApiResult<Uservm>> GetByName(string name)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.GetAsync($"/api/users/{name}/page");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<Uservm>>(body);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<Uservm>>(body);
+        }
+
         public async Task<ApiResult<PagedResult<Uservm>>> GetUsersPagings(GetUserPagingRequest request)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
