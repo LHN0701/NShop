@@ -98,10 +98,13 @@ namespace NShop.Application.Catalog.Products
             return product.Id;
         }
 
-        public async Task<int> Detele(int productId)
+        public async Task<ApiResult<bool>> Detele(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new NShopException($"Cannot find a product: {productId}");
+            if (product == null)
+            {
+                return new ApiErrorResult<bool>("Không tìm thấy sản phẩm");
+            }
 
             var images = _context.ProductImages.Where(x => x.ProductId == productId);
             foreach (var image in images)
@@ -109,8 +112,14 @@ namespace NShop.Application.Catalog.Products
                 await _storageService.DeleteFileAsync(image.ImagePath);
             }
 
-            _context.Products.Remove(product);
-            return await _context.SaveChangesAsync();
+            var result = _context.Products.Remove(product);
+            if (result != null)
+            {
+                await _context.SaveChangesAsync();
+                return new ApiSuccessResult<bool>();
+            }
+
+            return new ApiErrorResult<bool>("Xóa sản phẩm thất bại");
         }
 
         public async Task<PagedResult<ProductVm>> GetAllPaging(GetManageProductPagingRequest request)
@@ -248,14 +257,18 @@ namespace NShop.Application.Catalog.Products
             var product = await _context.Products.FindAsync(request.Id);
             var productTranslations = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id
             && x.LanguageId == request.LanguageId);
-            if (product == null || productTranslations == null) throw new NShopException($"Cannot find a product with id: {request.Id}");
+            if (product == null || productTranslations == null)
+            {
+                throw new NShopException($"Cannot find product with id {request.Id}");
+            }
 
             productTranslations.Name = request.Name;
-            productTranslations.SeoAlias = request.SeoAlias;
-            productTranslations.SeoDescription = request.SeoDescription;
-            productTranslations.SeoTitle = request.SeoTitle;
             productTranslations.Description = request.Description;
             productTranslations.Details = request.Details;
+            productTranslations.SeoDescription = request.SeoDescription;
+            productTranslations.SeoTitle = request.SeoTitle;
+            productTranslations.SeoAlias = request.SeoAlias;
+            var productResult = _context.ProductTranslations.Update(productTranslations);
 
             // Save Image
             if (request.ThumbnailImage != null)
@@ -368,7 +381,7 @@ namespace NShop.Application.Catalog.Products
             var user = await _context.Products.FindAsync(id);
             if (user == null)
             {
-                return new ApiErrorResult<bool>($"sản phẩm với {id} không tồn tại");
+                return new ApiErrorResult<bool>($"Cannot find product with id {id}");
             }
 
             foreach (var category in request.Categories)

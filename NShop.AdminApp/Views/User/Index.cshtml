@@ -2,7 +2,7 @@
 @model PagedResult<NShop.ViewModels.System.Users.Uservm>
 
 @{
-    ViewData["Title"] = "Danh sách người dùng";
+    ViewData["Title"] = "List Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section scripts
@@ -15,17 +15,17 @@
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Danh sách người dùng</h1>
+    <h1 class="mt-4">List users</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Danh sách người dùng</li>
+        <li class="breadcrumb-item"><a href="/">Home page</a></li>
+        <li class="breadcrumb-item active">List users</li>
     </ol>
 
     <div class="card mb-12">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Create</a>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
@@ -34,7 +34,7 @@
                                 <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
                             </div>
                             <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="submit" class="btn btn-primary">Search</button>
                                 <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-dark">Reset</button>
                             </div>
                         </div>
@@ -55,16 +55,16 @@
                 <thead>
                     <tr>
                         <th>
-                            Tên
+                            First name
                         </th>
                         <th>
-                            Họ
+                            Last name
                         </th>
                         <th>
-                            Số điện thoại
+                            Phone number
                         </th>
                         <th>
-                            Tài khoản
+                            Account
                         </th>
                         <th>
                             Email
@@ -92,10 +92,10 @@
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
                             <td>
-                                @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
-                                @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
-                                @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
-                                @Html.ActionLink("Gán quyền", "RoleAssign", new { id = item.Id })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                                @Html.ActionLink("RoleAssign", "RoleAssign", new { id = item.Id })
                             </td>
                         </tr>
                     }

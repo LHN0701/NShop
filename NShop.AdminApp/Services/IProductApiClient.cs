@@ -1,4 +1,5 @@
-﻿using NShop.ViewModels.Catalog.Products;
+﻿using NShop.ViewModels.Catalog.ProductImages;
+using NShop.ViewModels.Catalog.Products;
 using NShop.ViewModels.Common;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,11 @@ namespace NShop.AdminApp.Services
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
 
         Task<ProductVm> GetById(int Id, string languageId);
+
+        Task<List<ProductImageViewModel>> GetListImages(int productId);
+
+        Task<ApiResult<bool>> DeleteProduct(int productId);
+
+        Task<bool> UpdateProduct(ProductUpdateRequest request);
     }
 }

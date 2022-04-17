@@ -12,7 +12,7 @@ namespace NShop.Application.Catalog.Products
 
         Task<int> Update(ProductUpdateRequest request);
 
-        Task<int> Detele(int productId);
+        Task<ApiResult<bool>> Detele(int productId);
 
         Task<ProductVm> GetById(int productId, string languageId);
 

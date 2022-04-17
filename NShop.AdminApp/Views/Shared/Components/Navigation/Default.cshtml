@@ -24,10 +24,10 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <form method="get" asp-controller="User" asp-action="DetailAdmin">
-                    <button type="submit" class="dropdown-item" name="name" value="@User.Identity.Name">@User.Identity.Name</button>
+                    <button type="submit" class="dropdown-item" name="name" value="@User.Identity.Name">Information admin</button>
                 </form>
                 <form method="post" asp-controller="User" asp-action="Logout">
-                    <button type="submit" class="dropdown-item">Đăng xuất</button>
+                    <button type="submit" class="dropdown-item">Log out</button>
                 </form>
             </ul>
         </li>

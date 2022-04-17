@@ -9,7 +9,7 @@ namespace NShop.ViewModels.Catalog.Products
 {
     public class ProductUpdateRequest
     {
-        public int Id { get; set; }
+        public int Id { set; get; }
         public string Name { set; get; }
         public string Description { set; get; }
         public string Details { set; get; }
@@ -19,7 +19,5 @@ namespace NShop.ViewModels.Catalog.Products
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
         public IFormFile ThumbnailImage { get; set; }
-
-
     }
 }
