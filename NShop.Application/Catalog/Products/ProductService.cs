@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NShop.Application.Common;
 using NShop.Data.EF;
 using NShop.Data.Entities;
+using NShop.Utilities.Constants;
 using NShop.Utilities.Exceptions;
 using NShop.ViewModels.Catalog.ProductImages;
 using NShop.ViewModels.Catalog.Products;
@@ -56,16 +57,13 @@ namespace NShop.Application.Catalog.Products
 
         public async Task<int> Create(ProductCreateRequest request)
         {
-            var product = new Product()
+            var languages = _context.Languages;
+            var translation = new List<ProductTranslation>();
+            foreach (var language in languages)
             {
-                Price = request.Price,
-                OriginalPrice = request.OriginalPrice,
-                Stock = request.Stock,
-                ViewCount = 0,
-                DateCreated = DateTime.Now,
-                ProductTranslations = new List<ProductTranslation>()
+                if (language.Id == request.LanguageId)
                 {
-                    new ProductTranslation()
+                    translation.Add(new ProductTranslation()
                     {
                         Name = request.Name,
                         Description = request.Description,
@@ -74,8 +72,28 @@ namespace NShop.Application.Catalog.Products
                         SeoAlias = request.SeoAlias,
                         SeoTitle = request.SeoTitle,
                         LanguageId = request.LanguageId
-                    }
+                    });
                 }
+                else
+                {
+                    translation.Add(new ProductTranslation()
+                    {
+                        Name = SystemConstants.ProductConstants.NA,
+                        Description = SystemConstants.ProductConstants.NA,
+                        SeoAlias = SystemConstants.ProductConstants.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
+
+            var product = new Product()
+            {
+                Price = request.Price,
+                OriginalPrice = request.OriginalPrice,
+                Stock = request.Stock,
+                ViewCount = 0,
+                DateCreated = DateTime.Now,
+                ProductTranslations = translation
             };
             // Save Image
             if (request.ThumbnailImage != null)
@@ -131,7 +149,7 @@ namespace NShop.Application.Catalog.Products
                         from pic in ppic.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        where pt.LanguageId == request.LanguageId
+                        where pt == null || pt.LanguageId == request.LanguageId
                         select new { p, pt, pic };
             //2.filter
             if (!string.IsNullOrEmpty(request.Keyword))
