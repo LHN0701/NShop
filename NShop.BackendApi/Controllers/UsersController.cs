@@ -29,12 +29,13 @@ namespace NShop.BackendApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var resultToken = await _userService.Authencate(request);
-            if (string.IsNullOrEmpty(resultToken.ResultObj))
+            var result = await _userService.Authencate(request);
+
+            if (string.IsNullOrEmpty(result.ResultObj))
             {
-                return BadRequest(resultToken);
+                return BadRequest(result);
             }
-            return Ok(resultToken);
+            return Ok(result);
         }
 
         [HttpPost]

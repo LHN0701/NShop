@@ -23,7 +23,8 @@ namespace NShop.AdminApp.Controllers
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
 
-        public LoginController(IUserApiClient userApiClient, IConfiguration configuration)
+        public LoginController(IUserApiClient userApiClient,
+            IConfiguration configuration)
         {
             _userApiClient = userApiClient;
             _configuration = configuration;
@@ -48,21 +49,14 @@ namespace NShop.AdminApp.Controllers
                 ModelState.AddModelError("", result.Message);
                 return View();
             }
-
             var userPrincipal = this.ValidateToken(result.ResultObj);
-
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
-
             HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
-
             HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
-
-            Console.WriteLine();
-
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
